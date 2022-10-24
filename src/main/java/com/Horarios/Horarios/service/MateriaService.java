@@ -5,7 +5,9 @@ import com.Horarios.Horarios.repository.IMateriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -14,12 +16,24 @@ public class MateriaService {
     @Autowired
     private IMateriaRepository iMateriaRepository;
 
-    public Materia guardarMateria(Materia materia){
-        Materia validacionMateria = null;
-        if(!consultarPorNombre(materia.getNombre()).isPresent()){
-            validacionMateria = iMateriaRepository.save(materia);
+    public Map<String, Object> guardarMateria(Materia materia){
+        Map<String, Object> map = new HashMap<String,Object>();
+        if(!consultarPorNombre(materia.getNombre()).isPresent() && validarObjeto(materia.getNombre())){
+            map.put("response", iMateriaRepository.save(materia).getId());
+            return map;
+        }else{
+            return map;
         }
-        return validacionMateria;
+    }
+
+    public boolean validarObjeto(String nombreMateria){
+        if(nombreMateria == null){
+            return false;
+        }
+        if(nombreMateria.equals("")){
+            return false;
+        }
+        return true;
     }
 
     public List<Materia> consultarMaterias(){

@@ -16,6 +16,8 @@ public class Grado {
     private String abreviacion;
     private Nomenclatura nomenclatura;
     private Nivel nivel;
+    @Column(name = "cantidad_estudiante")
+    private int cantidadEstiante;
 
 }
 
