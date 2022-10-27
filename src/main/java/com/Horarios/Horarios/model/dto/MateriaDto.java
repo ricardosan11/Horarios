@@ -9,10 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+public class MateriaDto {
 
-public class ResponseMainDto {
+    private Long id;
+    private String nombre;
+    private String descripcion;
 
-    private String mensaje;
-    private Object respuesta;
 
 }

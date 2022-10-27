@@ -1,10 +1,13 @@
 package com.Horarios.Horarios.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "AsignacionProfesor")
 public class AsignacionProfesor {

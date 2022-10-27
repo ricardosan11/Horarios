@@ -1,6 +1,7 @@
 package com.Horarios.Horarios.controller;
 
 import com.Horarios.Horarios.model.Materia;
+import com.Horarios.Horarios.model.dto.MateriaDto;
 import com.Horarios.Horarios.model.dto.ResponseMainDto;
 import com.Horarios.Horarios.service.MateriaService;
 import com.Horarios.Horarios.utils.Route;
@@ -10,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,28 +33,48 @@ public class MateriaController {
 
     }
 
-    @GetMapping("/consultarMaterias")
-    public ResponseEntity<List<Materia>> listarMaterias(){
-        return ResponseEntity.ok(materiaService.consultarMaterias());
+    @GetMapping(value = Route.CONSULTAR)
+    public ResponseEntity<ResponseMainDto> listarMaterias(){
+        return new ResponseEntity<ResponseMainDto>(new ResponseMainDto("Consultar exitoso.", materiaService.consultarMaterias()), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/consultarMateriaPorId/{id}")
-    public ResponseEntity<Optional<Materia>> listarMateriaPorId(@PathVariable Long id){
-        return ResponseEntity.ok(materiaService.consultarPorId(id));
+    @GetMapping(value = Route.CONSULTARPORID)
+    public ResponseEntity<ResponseMainDto> listarMateriaPorId(@PathVariable Long id){
+        MateriaDto materiaDto = materiaService.consultarPorId(id);
+        if(materiaDto != null){
+            return new ResponseEntity<ResponseMainDto>(new ResponseMainDto("Consultar existoso.", materiaDto), HttpStatus.FOUND);
+        }else {
+            return new ResponseEntity<ResponseMainDto>(new ResponseMainDto("Consultar fallido.", materiaDto), HttpStatus.NOT_FOUND);
+        }
     }
 
-    @GetMapping("/consultarMateriaPorNombre/{nombre}")
-    public ResponseEntity<Optional<Materia>> listarMateriaPorNombre(@PathVariable String nombre){
-        return ResponseEntity.ok(materiaService.consultarPorNombre(nombre));
+    @GetMapping(value = Route.CONSULTARPORNOMBRE)
+    public ResponseEntity<ResponseMainDto> listarMateriaPorNombre(@PathVariable String nombre){
+        MateriaDto materiaDto = materiaService.consultarPorNombre(nombre);
+        if(materiaDto != null){
+            return new ResponseEntity<ResponseMainDto>(new ResponseMainDto("Consultar existoso.", materiaDto), HttpStatus.FOUND);
+        }else {
+            return new ResponseEntity<ResponseMainDto>(new ResponseMainDto("Consultar fallido.", materiaDto), HttpStatus.NOT_FOUND);
+        }
     }
 
-    @DeleteMapping("/eliminarPorId/{id}")
-    public void eliminarPorId(@PathVariable Long id){
-        materiaService.eliminarMateria(id);
+    @DeleteMapping(value = Route.ELIMINAR)
+    public ResponseEntity<ResponseMainDto> eliminarPorId(@PathVariable Long id){
+        Map<String, Object> map = materiaService.eliminarMateria(id);
+        if(map.get("response") != null){
+            return new ResponseEntity<ResponseMainDto>(new ResponseMainDto("Eliminación exitosa.", map.get("response")), HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<ResponseMainDto>(new ResponseMainDto("Eliminación fallida.", map.get("response")), HttpStatus.NOT_FOUND);
+        }
     }
 
-    @PutMapping("/editarMateria")
-    public ResponseEntity<Materia> editarMateria(@RequestBody Materia materia){
-        return ResponseEntity.status(HttpStatus.FOUND).body(materiaService.editarMateria(materia));
+    @PutMapping(value = Route.EDITAR)
+    public ResponseEntity<ResponseMainDto> editarMateria(@RequestBody Materia materia){
+        Map<String, Object> map = materiaService.editarMateria(materia);
+        if(map.get("response") != null){
+            return new ResponseEntity<ResponseMainDto>(new ResponseMainDto("Modificación exitosa.", map.get("response")), HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<ResponseMainDto>(new ResponseMainDto("Modificación fallida.", map.get("response")), HttpStatus.NOT_MODIFIED);
+        }
     }
 }
