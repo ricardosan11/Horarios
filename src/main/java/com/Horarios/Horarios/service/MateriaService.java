@@ -57,12 +57,10 @@ public class MateriaService {
         Map<String, Object> map = new HashMap<>();
         if(materia.getId() != null && iMateriaRepository.existsById(materia.getId())){
             map.put("response", iMateriaRepository.save(materia).getId());
-            return map;
         }else{
             map.put("error", null);
-            return map;
         }
-
+        return map;
     }
 
     public MateriaDto consultarPorId(Long id){
@@ -80,7 +78,6 @@ public class MateriaService {
         Optional<Materia> optional = iMateriaRepository.findByNombre(nombre);
         if (optional.isPresent()){
             return MateriaMapper.convertirEntityADto(optional.get());
-
         }else{
             return null;
         }

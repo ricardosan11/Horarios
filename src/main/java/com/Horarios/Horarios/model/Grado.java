@@ -15,13 +15,12 @@ public class Grado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private String codigo;
-    private String nombre;
+    private NombreGrado nombre;
     private String abreviacion;
     private Nomenclatura nomenclatura;
     private Nivel nivel;
-    @Column(name = "cantidad_estudiante")
-    private int cantidadEstiante;
+    @Column(name = "cantidadEstudiante")
+    private int cantidadEstudiante;
 
 }
 

@@ -2,7 +2,6 @@ package com.Horarios.Horarios.mappers;
 
 import com.Horarios.Horarios.model.Materia;
 import com.Horarios.Horarios.model.dto.MateriaDto;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
