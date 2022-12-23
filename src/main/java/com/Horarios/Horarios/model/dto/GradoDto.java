@@ -1,19 +1,21 @@
 package com.Horarios.Horarios.model.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+public class GradoDto {
 
-public class MateriaRegistrarDto {
-
+    private Long id;
     private String nombre;
-    private String descripcion;
+    private String abreviacion;
+    private String nomenclatura;
+    private String nivel;
+    private int cantidadEstudiante;
 
 }
